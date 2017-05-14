@@ -88,12 +88,13 @@ public class Demo6 {
 				List<Integer> numbers=Arrays.asList(1,2,3,4,5,1,2,3,4,5);
 				List<Integer> evenNumbers1 = new ArrayList<>();
 				numbers.stream().filter(e -> e % 2 == 0).map(e -> e*2).forEach(e->evenNumbers1.add(e)); // !bad way to do => shared mutability 
+				
+				//Eg : Good ways 
 					/**
 					 * a- toList : 
 					 * . Create a list
 					 * . Support duplicates
 					 */
-							//Eg : Good way 
 							List<Integer> evenNumbers2 = new ArrayList<>(); 
 							evenNumbers2 = numbers.stream().filter(e -> e % 2 == 0).map(e -> e*2).collect(Collectors.toList()); //duplicates : OK 
 							System.out.println(evenNumbers2); //4,8,4,8
@@ -105,7 +106,7 @@ public class Demo6 {
 							Set<Integer> evenNumbers3 = new HashSet<Integer>();
 							evenNumbers3 = numbers.stream().filter(e -> e % 2 == 0).map(e -> e*2).collect(Collectors.toSet());	//duplicates : No ! 
 							System.out.println(evenNumbers3); //4,8
-							
+						
 					/**
 					 * c- toMap	:
 					 * . Create a map (key,value)
@@ -120,6 +121,10 @@ public class Demo6 {
 					 * d- groupingBy :
 					 * 	. Create a map (key, value)	: grouped by key
 					 */
+							/**
+							 * d-1 groupingBy :
+							 */
+							
 							//Eg :  
 							//create a map where name is the key and value all the employees with that name
 							System.out.println(
@@ -129,12 +134,18 @@ public class Demo6 {
 							System.out.println(
 									employees.stream().collect(Collectors.groupingBy(Employee::getName))
 							);
-							//Eg : create a map where name is the key and value is all the ages of people with that name
+							/**
+							 * d-2 groupingBy and mapping :
+							 */
+							//Eg : create a map where name is the key and value is all the ages of people with that name 
 							System.out.println(
 									employees.stream().collect(
 											Collectors.groupingBy(Employee::getName,
 																	Collectors.mapping(Employee::getAge,Collectors.toList())))
 							);
+					/**
+					 * and others more ...		
+					 */
 	}
 	
 	
